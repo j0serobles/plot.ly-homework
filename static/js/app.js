@@ -32,6 +32,8 @@ function optionChanged(subjectID) {
   //console.log(samplesData);
   if (samplesData.length > 0)  {
     buildBarChart(samplesData);
+    buildBubbleChart(samplesData);
+    buildPanel(allSampleData, subjectID);
   }
   }
 
@@ -60,6 +62,117 @@ function optionChanged(subjectID) {
 
     Plotly.newPlot ("bar", data); 
 
+  }
+
+
+  function buildBubbleChart(samplesData) { 
+    //Build a bubble chart with the samples data.
+    // y = sample_values
+    // x = otu_ids
+    // marker colors = otu_ids
+    // marker size   = sample_values
+    // text = otu_labels
+    yLabels      = samplesData[0].sample_values;
+    xLabels      = samplesData[0].otu_ids;
+    markerSizes  = samplesData[0].sample_values;
+    //markerColors = 
+    hoverText = samplesData[0].otu_labels;
+
+    let trace1 = {
+      x : xLabels,
+      y : yLabels,
+      mode : "markers",
+      marker : { size : markerSizes,
+                 color : 'rgb(255,228,196)' },
+      text : hoverText
+    }
+
+    let data = [trace1]
+
+    let layout = {
+       title  : `Operational Taxonomic Units`, 
+       showlevend: false
+    }
+
+    Plotly.newPlot ("bubble", data, layout); 
+
+  }
+
+  function buildPanel(allSamplesData, subjectID) { 
+    //Fill the Pane's data area with a table 
+    // showing the metadata[] array.
+
+    console.log(allSamplesData);
+
+    let metaData = allSamplesData.metadata.filter( sample => {
+      return (sample.id == subjectID); 
+    }); 
+
+    console.log(metaData);
+    
+    if (metaData.length > 0) { 
+
+      let id        = metaData[0].id;
+      let ethnicity = metaData[0].ethnicity;
+      let gender    = metaData[0].gender;
+      let age       = metaData[0].age;
+      let location  = metaData[0].location;
+      let bbtype    = metaData[0].bbtype;
+      let wfreq     = metaData[0].wfreq || "Value Not Found";
+      // console.log (`${id}, ${ethnicity}, ${gender}, ${age}, ${location}, ${bbtype} , ${wfreq}`);
+      
+      let table = d3.select("#panel-table");
+      table.selectAll("tr").remove();
+      let trow;
+        trow = table.append("tr");
+        trow.append("td").text(` Id : ${id}`);
+        trow = table.append("tr");
+        trow.append("td").text(`Ethnicity : ${ethnicity}`);
+        trow = table.append("tr");
+        trow.append("td").text(`Gender : ${gender}`);
+        trow = table.append("tr");
+        trow.append("td").text(`Age : ${age}`);
+        trow = table.append("tr");
+        trow.append("td").text(` Location : ${location}`);
+        trow = table.append("tr");
+        trow.append("td").text(` BB Type : ${bbtype}`);
+        trow = table.append("tr");
+        trow.append("td").text(` Wash Freq. : ${wfreq}`);
+    }
+
+    buildGauge(metaData); 
+    
+    return(0);
+  }
+
+  function buildGauge(metaData) {
+
+    var data = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: metaData[0].wfreq,
+        title: { text: "Wash Frequency" },
+        type: "indicator",
+        mode: "gauge+number",
+        gauge: { 
+          axis: { range: [null, 10] },
+          steps: [
+            { range: [0, 250], color: "lightgray" },
+            { range: [250, 400], color: "gray" }
+          ],
+          threshold: {
+            line: { color: "red", width: 4 },
+            thickness: 0.75,
+            value: 10
+          }
+        }
+      }
+    ];
+    
+    var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+    Plotly.newPlot('gauge', data, layout);
+    return(0);
+    
   }
  // samplesData[0].otu_ids.forEach( (otuId, index, array) => {
  //   console.log (`OTU ID: ${otuId}, Value : ${samplesData[0].sample_values[index]}, Label:${samplesData[0].otu_labels[index]}`);
@@ -184,7 +297,6 @@ function init(data) {
 console.log(window.location.pathname);
 var allSampleData; 
 d3.json("http://localhost:8000/samples.json").then( function(data) {
-    console.log ("Calling init"); 
     init(data);
     allSampleData = data;
 });
