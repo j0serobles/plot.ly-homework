@@ -17,6 +17,16 @@ function unpack(rows, index) {
   });
 }
 
+// Get Random Color
+// Returns a random RGB color 
+function getRandomColor() {
+  let red = Math.floor(Math.random() * 256);
+  let green = Math.floor(Math.random() * 256);
+  let blue = Math.floor(Math.random() * 256);
+  let colorCode = `#${red.toString(16).padStart(2,"0")}${green.toString(16).padStart(2,"0")}${blue.toString(16).padStart(2,"0")}`
+  return (colorCode);
+}
+
 //Gets invoked when a new value is selected in the list of values.
 function optionChanged(subjectID) {
   //get the samples object from the array for the subjectID passed as parameter.
@@ -75,15 +85,17 @@ function optionChanged(subjectID) {
     yLabels      = samplesData[0].sample_values;
     xLabels      = samplesData[0].otu_ids;
     markerSizes  = samplesData[0].sample_values;
-    //markerColors = 
+    markerColors = samplesData[0].otu_ids.map( otu_id => getRandomColor());
+    console.log(markerColors);
     hoverText = samplesData[0].otu_labels;
 
     let trace1 = {
       x : xLabels,
       y : yLabels,
       mode : "markers",
-      marker : { size : markerSizes,
-                 color : 'rgb(255,228,196)' },
+      marker : { size  : markerSizes,
+                 //color : 'rgb(255,228,196)' },
+                 color : markerColors },
       text : hoverText
     }
 
