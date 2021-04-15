@@ -8,67 +8,43 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 ## Step 1: Plotly
 
-1. Use the D3 library to read in `samples.json`.
+1. The D3 Library was used to read in the [`samples.json`](./data/samples.json) file.
 
-2. Create a horizontal bar chart with a dropdown menu to display the top 10 OTUs found in that individual.
+2. The first chart is a horizontal bar chart to display the top 10 OTUs found for a particular individual.  The individual's identifier can be selected from a drop down list.
 
-* Use `sample_values` as the values for the bar chart.
+![dropdown_List](Images/dropdown1.png)   ![bar Chart](Images/hw01.png)
 
-* Use `otu_ids` as the labels for the bar chart.
+* The bar heights are provided by the `sample_values` array.
 
-* Use `otu_labels` as the hovertext for the chart.
+* The labels for the bar chart are provided by the `otu_ids` array.
 
-  ![bar Chart](Images/hw01.png)
+* The hovertext is provided by the `otu_labels` array.
 
-3. Create a bubble chart that displays each sample.
 
-* Use `otu_ids` for the x values.
 
-* Use `sample_values` for the y values.
+3. The second chart is a bubble chart that displays each sample, using:
 
-* Use `sample_values` for the marker size.
+* `otu_ids` for the x values (horizontal axis).
 
-* Use `otu_ids` for the marker colors.
+* `sample_values` for the y values (vertical axes).
 
-* Use `otu_labels` for the text values.
+* `sample_values` for the marker size (circle size).
+
+* `otu_ids` for the marker colors, the color are generated randomly.
+
+* `otu_labels` for the text values (hovertext).
 
 ![Bubble Chart](Images/bubble_chart.png)
 
-4. Display the sample metadata, i.e., an individual's demographic information.
 
-5. Display each key-value pair from the metadata JSON object somewhere on the page.
+4. The individual's demographic information is display on a panel (card element):
 
 ![hw](Images/hw03.png)
 
-6. Update all of the plots any time that a new sample is selected.
+6. All of the plots are updated any time that a new sample id is selected from the list of values:
 
-Additionally, you are welcome to create any layout that you would like for your dashboard. An example dashboard is shown below:
+![hw](Images/bb.gif)
 
-![hw](Images/hw02.png)
-
-## Advanced Challenge Assignment (Optional)
-
-The following task is advanced and therefore optional.
-
-* Adapt the Gauge Chart from <https://plot.ly/javascript/gauge-charts/> to plot the weekly washing frequency of the individual.
-
-* You will need to modify the example gauge code to account for values ranging from 0 through 9.
-
-* Update the chart whenever a new sample is selected.
-
-![Weekly Washing Frequency Gauge](Images/gauge.png)
-
-## Deployment
-
-* Deploy your app to a free static page hosting service, such as GitHub Pages. Submit the links to your deployment and your GitHub repo.
-
-* Ensure your repository has regular commits (i.e. 20+ commits) and a thorough README.md file
-
-## Hints
-
-* Use `console.log` inside of your JavaScript code to see what your data looks like at each step.
-
-* Refer to the [Plotly.js documentation](https://plot.ly/javascript/) when building the plots.
 
 ### About the Data
 

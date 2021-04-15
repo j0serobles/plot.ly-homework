@@ -308,7 +308,7 @@ function init(data) {
 
 console.log(window.location.pathname);
 var allSampleData; 
-d3.json("http://localhost:8000/samples.json").then( function(data) {
+d3.json("http://localhost:8000/data/samples.json").then( function(data) {
     init(data);
     allSampleData = data;
 });
