@@ -6,7 +6,7 @@ In this assignment, you will build an interactive dashboard to explore the [Bell
 
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
-## Step 1: Plotly
+##  Plotly
 
 1. The D3 Library was used to read in the [`samples.json`](./data/samples.json) file.
 
@@ -49,6 +49,21 @@ The dataset reveals that a small handful of microbial species (also called opera
 ### About the Data
 
 Hulcr, J. et al.(2012) _A Jungle in There: Bacteria in Belly Buttons are Highly Diverse, but Predictable_. Retrieved from: [http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/](http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/)
+
+
+### How to install the program.
+
+* Clone the [github repo](https://github.com/j0serobles/plot.ly-homework) to your local machine.
+
+* Open the project with VSCode.
+
+* Right click in the index.html file and select "Open with Live Server".  This will activate the HTTP Server at its default port 5500.
+
+![LiveServerActivation](./Images/liveserver.PNG)
+
+* The Web page with the dashboard should be displayed:
+
+![HomePage](./Images/homepage.PNG)
 
 - - -
 
