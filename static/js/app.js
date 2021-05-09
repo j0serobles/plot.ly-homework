@@ -29,23 +29,21 @@ function getRandomColor() {
 
 //Gets invoked when a new value is selected in the list of values.
 function optionChanged(subjectID) {
+
+  console.log(subjectID);
+
   //get the samples object from the array for the subjectID passed as parameter.
   var samplesData = allSampleData.samples.filter( sample => {
     return (sample.id === subjectID); 
   }); 
 
-  // //Sort descending
-  // var oneSubjectData = samplesData[0].sample_values.sort(function sortFunction({sample_values:a}, {sample_values:b}) {
-  //   return a - b;
-  // });
-
-  //console.log(samplesData);
+  console.log(samplesData);
   if (samplesData.length > 0)  {
     buildBarChart(samplesData);
     buildBubbleChart(samplesData);
     buildPanel(allSampleData, subjectID);
   }
-  }
+}
 
   function buildBarChart(samplesData) { 
     //Build a horizontal bar char with the samples data.
@@ -81,12 +79,12 @@ function optionChanged(subjectID) {
     // x = otu_ids
     // marker colors = otu_ids
     // marker size   = sample_values
-    // text = otu_labels
+    // text          = otu_labels
     yLabels      = samplesData[0].sample_values;
     xLabels      = samplesData[0].otu_ids;
     markerSizes  = samplesData[0].sample_values;
     markerColors = samplesData[0].otu_ids.map( otu_id => getRandomColor());
-    console.log(markerColors);
+    //console.log(markerColors);
     hoverText = samplesData[0].otu_labels;
 
     let trace1 = {
@@ -94,7 +92,6 @@ function optionChanged(subjectID) {
       y : yLabels,
       mode : "markers",
       marker : { size  : markerSizes,
-                 //color : 'rgb(255,228,196)' },
                  color : markerColors },
       text : hoverText
     }
@@ -102,6 +99,8 @@ function optionChanged(subjectID) {
     let data = [trace1]
 
     let layout = {
+     xaxis: { title: "OTU IDs"},
+     yaxis: { title: "Sample Values"},
        title  : `Operational Taxonomic Units`, 
        showlevend: false
     }
@@ -186,36 +185,7 @@ function optionChanged(subjectID) {
     return(0);
     
   }
- // samplesData[0].otu_ids.forEach( (otuId, index, array) => {
- //   console.log (`OTU ID: ${otuId}, Value : ${samplesData[0].sample_values[index]}, Label:${samplesData[0].otu_labels[index]}`);
- //});
-
-//   sortedSampleValues = samplesData[0].sample_values.sort( (a,b) => parseInt(b) - parseInt(a) );
  
-//  var trace1 = {
-//   x: sortedSampleValues.slice(0,10);
-//   y: reversedData.map(object => object.greekName),
-//   text: reversedData.map(object => object.greekName),
-//   name: "Greek",
-//   type: "bar",
-//   orientation: "h"
-// };
-
-//   console.log (samplesData); 
-//   console.log(sortedOtuIds);
-  
-
-  // d3.json(queryUrl).then(function(data) {
-  //   // @TODO: Unpack the dates, open, high, low, close, and volume
-  //   var dates = unpack(data.dataset.data, 0);
-  //   var closingPrices = unpack(data.dataset.data, 4);
-  //   var highPrices = unpack(data.dataset.data, 2);
-  //   var openPrices = unpack(data.dataset.data, 1);
-  //   var lowPrices = unpack(data.dataset.data, 3);
-  //   var volume    = unpack(data.dataset.data, 5);
-  //   buildTable(dates, openPrices, highPrices, lowPrices, closingPrices, volume);
-  // });
-
 function buildTable(dates, openPrices, highPrices, lowPrices, closingPrices, volume) {
   var table = d3.select("#summary-table");
   var tbody = table.select("tbody");
@@ -232,83 +202,29 @@ function buildTable(dates, openPrices, highPrices, lowPrices, closingPrices, vol
 }
 
 function init(data) {
+    console.log(">> init(data)");
 
     //Fill the "selDataset" <select> element with the values from Test Subject IDs.
     idArray = data.metadata.map( subject => subject.id ); 
     //Add a space as the default (first) option.
-    idArray.unshift(" "); 
+   // idArray.unshift(" "); 
     let selectElement = d3.select("#selDataset"); 
     idArray.forEach( function(subjectID) {
       selectElement.append("option").text(subjectID); 
     });
-
+    optionChanged(idArray[0].toString());
+    console.log("<< init(data)");
     return (0);
-
-    //Grab Name, Stock, Start Date, and End Date from the response json object to build the plots
-    var name      = data.dataset.name;
-    var stock     = data.dataset.dataset_code;
-    var startDate = data.dataset.start_date;
-    var endDate   = data.dataset.end_date;
-
-    // @TODO: Unpack the dates, open, high, low, and close prices
-    var dates         = unpack(data.dataset.data, 0);
-    var closingPrices = unpack(data.dataset.data, 4);
-    var highPrices    = unpack(data.dataset.data, 2);
-    var openPrices    = unpack(data.dataset.data, 1);
-    var highPrices    = unpack(data.dataset.data, 2);
-    var lowPrices     = unpack(data.dataset.data, 3);
-    var volume        = unpack(data.dataset.data, 5);
-
-    getMonthlyData();
-
-    // Closing Scatter Line Trace
-    var trace1 = {
-      type: "scatter",
-      mode: "lines",
-      name: name,
-      x: dates,
-      y: closingPrices,
-      line: {
-        color: "#17BECF"
-      }
-    };
-
-    // Candlestick Trace
-   var trace2 = {
-      x: dates,
-      close: closingPrices,
-      high: highPrices,
-      low: lowPrices,
-      open: openPrices,
-      type: 'candlestick',
-      xaxis: 'x',
-      yaxis: 'y'
-    };
-
-    var data = [trace1, trace2];
-
-    var layout = {
-      title: `${stock} closing prices`,
-      xaxis: {
-        range: [startDate, endDate],
-        type: "date"
-      },
-      yaxis: {
-        autorange: true,
-        type: "linear"
-      },
-      showlegend: false
-    };
-
-    Plotly.newPlot("plot", data, layout);
-
-  
-
 }
 
 console.log(window.location.pathname);
 var allSampleData; 
-d3.json("http://localhost:8000/data/samples.json").then( function(data) {
-    init(data);
-    allSampleData = data;
+d3.json("http://localhost:5500/data/samples.json").then(
+function(data) {
+  allSampleData = data;
+  init(allSampleData);
+}, 
+function(error) {
+  alert(`Error fetching data. Make sure the http server is started at port 5500.`);
+  return console.warn(error);
 });
