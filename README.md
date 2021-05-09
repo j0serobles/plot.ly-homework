@@ -37,7 +37,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 ![Bubble Chart](Images/bubble_chart.png)
 
 
-4. The individual's demographic information is display on a panel (card element):
+4. The individual's demographic information is displayed on a panel (card element):
 
 ![hw](Images/hw03.png)
 
