@@ -30,14 +30,14 @@ function getRandomColor() {
 //Gets invoked when a new value is selected in the list of values.
 function optionChanged(subjectID) {
 
-  console.log(subjectID);
+  //console.log(subjectID);
 
   //get the samples object from the array for the subjectID passed as parameter.
   var samplesData = allSampleData.samples.filter( sample => {
     return (sample.id === subjectID); 
   }); 
 
-  console.log(samplesData);
+  //console.log(samplesData);
   if (samplesData.length > 0)  {
     buildBarChart(samplesData);
     buildBubbleChart(samplesData);
@@ -113,13 +113,13 @@ function optionChanged(subjectID) {
     //Fill the Pane's data area with a table 
     // showing the metadata[] array.
 
-    console.log(allSamplesData);
+    //console.log(allSamplesData);
 
     let metaData = allSamplesData.metadata.filter( sample => {
       return (sample.id == subjectID); 
     }); 
 
-    console.log(metaData);
+    //console.log(metaData);
     
     if (metaData.length > 0) { 
 
@@ -213,18 +213,18 @@ function init(data) {
       selectElement.append("option").text(subjectID); 
     });
     optionChanged(idArray[0].toString());
-    console.log("<< init(data)");
+    //console.log("<< init(data)");
     return (0);
 }
 
-console.log(window.location.pathname);
+//console.log(window.location.pathname);
 var allSampleData; 
-d3.json("http://localhost:5500/data/samples.json").then(
+d3.json("data/samples.json").then(
 function(data) {
   allSampleData = data;
   init(allSampleData);
 }, 
 function(error) {
-  alert(`Error fetching data. Make sure the http server is started at port 5500.`);
+  alert(`Error fetching data. Make sure the http server is started.`);
   return console.warn(error);
 });
