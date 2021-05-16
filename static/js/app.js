@@ -219,12 +219,12 @@ function init(data) {
 
 console.log(window.location.pathname);
 var allSampleData; 
-d3.json("http://localhost:5500/data/samples.json").then(
+d3.json("/data/samples.json").then(
 function(data) {
   allSampleData = data;
   init(allSampleData);
 }, 
 function(error) {
-  alert(`Error fetching data. Make sure the http server is started at port 5500.`);
+  alert(`Error fetching data. Make sure the http server is started.`);
   return console.warn(error);
 });
