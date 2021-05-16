@@ -219,7 +219,7 @@ function init(data) {
 
 console.log(window.location.pathname);
 var allSampleData; 
-d3.json("/data/samples.json").then(
+d3.json("data/samples.json").then(
 function(data) {
   allSampleData = data;
   init(allSampleData);
