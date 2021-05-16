@@ -51,7 +51,9 @@ The dataset reveals that a small handful of microbial species (also called opera
 Hulcr, J. et al.(2012) _A Jungle in There: Bacteria in Belly Buttons are Highly Diverse, but Predictable_. Retrieved from: [http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/](http://robdunnlab.com/projects/belly-button-biodiversity/results-and-data/)
 
 
-### How to install the program.
+### How to access the application.
+
+The application has been deployed in [GitHub Pages](https://j0serobles.github.io/plot.ly-homework/), or, if desired, it can be executed from the cloned repository: 
 
 * Clone the [github repo](https://github.com/j0serobles/plot.ly-homework) to your local machine.
 
